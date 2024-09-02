@@ -1,0 +1,77 @@
+/* Profile Card Container */
+.doctor-profile-card {
+    display: flex;
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #c9d4e0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.doctor-profile-card:hover {
+    transform: scale(1.02);
+}
+
+/* Doctor Image */
+.doctor-image img {
+    width: 300px;
+    height: auto;
+    border-right: 3px solid #ff6347;
+}
+
+/* Doctor Details */
+.doctor-details {
+    padding: 20px;
+    flex: 1;
+    background-color: #fff;
+}
+
+.doctor-name {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.doctor-degree {
+    font-size: 1.2em;
+    color: #6d6a6a;
+    margin-bottom: 15px;
+}
+
+
+.doctor-specialty {
+    margin-bottom: 15px;
+}
+
+.specialty-badge {
+    display: inline-block;
+    background-color: #ff6347;
+    color: #fff;
+    font-size: 0.9em;
+    padding: 5px 10px;
+    border-radius: 25px;
+    margin: 0 5px 5px 0;
+}
+
+.doctor-experience,
+.doctor-contact,
+.doctor-address,
+.doctor-fee {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.doctor-fee {
+    background-color: #f44336;
+    color: #fff;
+    padding: 8px 15px;
+    font-weight: bold;
+    border-radius: 25px;
+    text-align: center;
+    display: inline-block;
+}
+

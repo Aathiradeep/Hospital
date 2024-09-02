@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Bills</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>My Bills</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Bill ID</th>
+                <th>Patient</th>
+                <th>Date Generated</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.id }}</td>
+                <td>{{ bill.patient.name }}</td>
+                <td>{{ bill.date_generated|date:"d M Y" }}</td>
+                <td>{{ bill.amount }}</td>
+                <td><a href="{% url 'billing:billing_detail' bill.id %}">View Details</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No bills found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

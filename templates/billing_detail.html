@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Details</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/billing_detail.js' %}" defer></script>
+</head>
+<body>
+
+{% block content %}
+    <div class="billing-details-container">
+        <h1>View Bill Details</h1>
+
+        <!-- Select Patient -->
+        <form method="GET" action="{% url 'billing_detail' %}">
+            <div class="form-group">
+                <label for="patient_name">Select Patient</label>
+                <select id="patient_name" name="patient_id" class="form-control" onchange="this.form.submit();">
+                    <option value="">Select Patient</option>
+                    {% for patient in patients %}
+                        <option value="{{ patient.id }}" {% if patient.id|stringformat:"s" == request.GET.patient_id %}selected{% endif %}>{{ patient.first_name }} {{ patient.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+
+        <!-- Select Bill -->
+        {% if bills %}
+        <form method="GET" action="{% url 'billing_detail' %}">
+            <div class="form-group">
+                <label for="bill_id">Select Bill</label>
+                <select id="bill_id" name="bill_id" class="form-control" onchange="this.form.submit();">
+                    <option value="">Select Bill</option>
+                    {% for bill in bills %}
+                        <option value="{{ bill.id }}" {% if bill.id|stringformat:"s" == request.GET.bill_id %}selected{% endif %}>Bill ID: {{ bill.id }} - Dr. {{ bill.doctor.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+        {% endif %}
+
+        <!-- Bill Details -->
+        <div id="bill-details">
+            {% if selected_bill %}
+                <h2>Bill Details for {{ selected_bill.id }}</h2>
+                <p><strong>Doctor:</strong> Dr. {{ selected_bill.doctor.name }}</p>
+                <p><strong>Date Generated:</strong> {{ selected_bill.date_generated|date:"d M Y" }}</p>
+                <p><strong>Amount:</strong> ${{ selected_bill.amount }}</p>
+                <p><strong>Patient Phone:</strong> {{ selected_bill.patient_phone }}</p>
+                <p><strong>Patient Address:</strong> {{ selected_bill.patient_address }}</p>
+                <p><strong>Room Charge:</strong> ${{ selected_bill.room_charge }}</p>
+                <p><strong>Medicine Cost:</strong> ${{ selected_bill.medicine_cost }}</p>
+                <p><strong>Other Charges:</strong> ${{ selected_bill.other_charges }}</p>
+                <p><strong>Days Stayed:</strong> {{ selected_bill.days_stayed }}</p>
+                <p><strong>Consultation Fee:</strong> ${{ selected_bill.consultation_fee }}</p>
+
+                <div class="buttons-box">
+                    <a href="{% url 'download_pdf' selected_bill.id %}" class="btn btn-primary">Download Bill</a>
+                </div>
+            {% else %}
+                <p>Select a bill from the dropdown to view details.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Invoice - Bill {{ billing.id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        .invoice-container {
+            background: #fff;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 700px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .header img {
+            max-width: 100px;
+            height: auto;
+        }
+        .header h1 {
+            font-size: 20px;
+            color: #007bff;
+            margin: 0;
+        }
+        .details, .charges {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        .details p, .charges p {
+            margin: 4px 0;
+            font-size: 14px;
+            width: 50%;
+        }
+        .total-amount {
+            text-align: right;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #007bff;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+    {% load static %}
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            <img src="{% static 'images/logo_new.jpg' %}" alt="Hospital Logo">
+            <h1>Hospital Bill Invoice</h1>
+        </div>
+
+        <div class="details">
+            <p><strong>Bill ID:</strong> {{ billing.id }}</p>
+            <p><strong>Date:</strong> {{ billing.date_generated|date:"d M Y" }}</p>
+        </div>
+        <div class="details">
+            <p><strong>Patient:</strong> {{ billing.patient.first_name }} {{ billing.patient.last_name }}</p>
+            <p><strong>Doctor:</strong> {{ billing.doctor.first_name }} {{ billing.doctor.last_name }}</p>
+        </div>
+
+        <div class="charges">
+            <p><strong>Room Charge:</strong> &#8377; {{ billing.room_charge }}</p>
+            <p><strong>Days Stayed:</strong> {{ billing.days_stayed }}</p>
+        </div>
+        <div class="charges">
+            <p><strong>Medicine Cost:</strong> &#8377; {{ billing.medicine_cost }}</p>
+            <p><strong>Other Charges:</strong> ₹{{ billing.other_charges }}</p>
+        </div>
+
+        <div class="total-amount">
+            <p><strong>Total Amount Due:</strong> &#8377; {{ billing.calculate_total }}</p>
+        </div>
+
+        <div class="footer">
+            <p>Thank you for choosing Dayaan Medicals. Contact us at (+91) 7012994628 or Dayaan@HMS.com for any queries.</p>
+        </div>
+    </div>
+</body>
+</html>

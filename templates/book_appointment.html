@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Book an Appointment</h2>
+<form method="post">
+  {% csrf_token %}
+  <label for="doctor">Choose Doctor:</label>
+  <select name="doctor" id="doctor">
+    {% for doctor in doctors %}
+    <option value="{{ doctor.id }}">{{ doctor.name }}</option>
+    {% endfor %}
+  </select>
+  <label for="date">Choose Date:</label>
+  <input type="date" name="date" id="date" required>
+  <label for="time">Choose Time:</label>
+  <input type="time" name="time" id="time" required>
+  <button type="submit">Book Appointment</button>
+</form>
+{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Book an Appointment</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="doctor">Available Doctors:</label>
+            <select id="doctor" name="doctor" class="form-control">
+                {% for doctor in available_doctors %}
+                <option value="{{ doctor.id }}">{{ doctor.name }} - {{ doctor.working_hours }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        {% if available_times %}
+        <div class="form-group">
+            <label for="time">Available Times:</label>
+            <select id="time" name="time" class="form-control">
+                {% for time in available_times %}
+                <option value="{{ time }}">{{ time }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Book Appointment</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

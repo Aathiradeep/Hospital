@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Invoice for {{ billing.patient.username }}</h2>
+<p>Amount: {{ billing.amount }}</p>
+<p>Date: {{ billing.date }}</p>
+<p>Status: {% if billing.paid %} Paid {% else %} Unpaid {% endif %}</p>
+{% endblock %}

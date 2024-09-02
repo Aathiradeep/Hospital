@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .dashboard {
+        padding: 20px;
+        background: #7d97be;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        color: #333;
+    }
+
+    .dashboard-section {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .dashboard-section h3 {
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+        color: #555;
+    }
+
+    .dashboard-section a {
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #185495;
+        border: none;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-secondary {
+        background-color: #086431;
+        border: none;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .dashboard-overview {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 40px;
+    }
+
+    .overview-item {
+        width: 22%;
+        background: #007bff;
+        color: white;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .overview-item h4 {
+        margin-bottom: 10px;
+    }
+
+    .overview-item p {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    /* Background image */
+    .dashboard-background {
+        background: url('{% static "images/dashboard_bg.png" %}') no-repeat center center/cover;
+        padding: 50px 0;
+    }
+</style>
+
+<div class="dashboard-background">
+    <div class="dashboard">
+        <h2>Admin Dashboard</h2>
+
+        <div class="dashboard-overview">
+            <div class="overview-item" style="background-color: #007bff;">
+                <h4>Total Doctors</h4>
+                <p></p>
+            </div>
+            <div class="overview-item" style="background-color: #28a745;">
+                <h4>Total Patients</h4>
+                <p></p>
+            </div>
+            <div class="overview-item" style="background-color: #17a2b8;">
+                <h4>Appointments</h4>
+                <p></p>
+            </div>
+            <div class="overview-item" style="background-color: #dc3545;">
+                <h4>Reports</h4>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>Manage Doctors</h3>
+            <a href="{% url 'add_doctor' %}" class="btn btn-primary">Add New Doctor</a>
+            <a href="{% url 'doctor_list' %}" class="btn btn-secondary">View All Doctors</a>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>Manage Patients</h3>
+            <a href="{% url 'patient_list' %}" class="btn btn-primary">View All Patients</a>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>Appointments</h3>
+            <a href="{% url 'appointment_list' %}" class="btn btn-primary">View All Appointments</a>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>Reports & Billing</h3>
+            <a href="{% url 'report_detail' %}" class="btn btn-primary">View All Reports</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

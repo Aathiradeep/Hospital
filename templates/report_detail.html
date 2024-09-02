@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    /* Add styles as needed */
+</style>
+
+<div class="dashboard-background">
+    <div class="dashboard">
+        <h2>Reports & Analytics</h2>
+
+        <div class="dashboard-overview">
+            <div class="overview-item" style="background-color: #98b541;">
+                <h4>Total Doctors</h4>
+                <p>{{ total_doctors }}</p>
+            </div>
+            <div class="overview-item" style="background-color: #28a745;">
+                <h4>Total Patients</h4>
+                <p>{{ total_patients }}</p>
+            </div>
+            <div class="overview-item" style="background-color: #17a2b8;">
+                <h4>Appointments</h4>
+                <p>{{ total_appointments }}</p>
+            </div>
+            <div class="overview-item" style="background-color: #d05965;">
+                <h4>Total Revenue</h4>
+                <p>₹{{ total_revenue }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

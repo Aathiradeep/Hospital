@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/doc_profile.css' %}">
+
+<div class="doctor-profile-card">
+    <div class="doctor-image">
+        <img src="{{ doctor.image.url }}" alt="Dr. {{ doctor.name }}">
+    </div>
+    <div class="doctor-details">
+        <h2 class="doctor-name">Dr. {{ doctor.name }}</h2>
+        <p class="doctor-degree">{{ doctor.qualifications }}</p>
+        <div class="doctor-specialty">
+            {% if doctor.specialties.all %}
+                {% for specialty in doctor.specialties.all %}
+                    <span class="specialty-badge">{{ specialty.name }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <p class="doctor-experience">Experience: {{ doctor.experience }} years</p>
+        <p class="doctor-contact">Contact: {{ doctor.phone_number }}</p>
+        <p class="doctor-fee">Consultation Fee: ₹{{ doctor.consultation_fee }}</p>
+    </div>
+</div>
+
+{% endblock %}

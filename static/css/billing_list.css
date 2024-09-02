@@ -1,0 +1,124 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.billing-header {
+    text-align: center;
+    font-size: 2.5em;
+    color: #333333;
+    margin-bottom: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.filter-form {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.filter-form label {
+    font-size: 1em;
+    font-weight: bold;
+    color: #9c4949;
+}
+
+.filter-form .form-control {
+    padding: 10px 15px;
+    font-size: 1em;
+    border: 10px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+.filter-form .form-control:focus {
+    border-color: #007bff;
+}
+
+.action-link {
+    color: #007bff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.action-link:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.billing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.billing-table thead {
+    background-color: #007bff;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.billing-table th, .billing-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+.billing-table th {
+    font-size: 1.1em;
+}
+
+.billing-table tr:nth-child(even) {
+    background-color: #f7f9fc;
+}
+
+.billing-table tr:hover {
+    background-color: #e3eafc;
+}
+
+.billing-table td {
+    font-size: 1em;
+    color: #555555;
+}
+
+@media (max-width: 768px) {
+    .billing-header {
+        font-size: 2em;
+    }
+
+    .billing-table th, .billing-table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .filter-form {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .action-link {
+        padding: 8px 14px;
+        font-size: 0.9em;
+    }
+}

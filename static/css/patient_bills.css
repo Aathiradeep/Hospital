@@ -1,0 +1,102 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  background-image: url("{% static 'images/background_logo.jpg' %}");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Keeps the background fixed during scrolling */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background for readability */
+  border-radius: 8px; /* Rounded corners for container */
+}
+
+.billing-header {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #007bff;
+  text-align: center;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="date"] {
+  border: 1px solid #ced4da;
+  padding: 10px;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Table Styles */
+.billing-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.billing-table thead {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.billing-table th, .billing-table td {
+  padding: 15px; /* Increased padding for more space */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.billing-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.billing-table th {
+  font-weight: bold;
+}
+
+/* Action Link */
+.billing-table a.btn-info {
+  background-color: #17a2b8;
+  color: #fff;
+  padding: 8px 12px; /* Padding for button */
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.billing-table a.btn-info:hover {
+  background-color: #138496;
+}
+
+/* Empty State */
+.billing-table tbody tr td {
+  text-align: center;
+  padding: 20px;
+  color: #888;
+}

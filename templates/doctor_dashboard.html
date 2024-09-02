@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/dashboard_doc.css' %}">
+
+<div class="dashboard">
+    <!-- Display Success Messages -->
+    {% if messages %}
+    <div class="alert alert-success">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h2>Welcome, Dr. {{ user.doctor.name }}!</h2>
+
+    <!-- Centered Profile Section -->
+    <div class="profile-icon">
+        <a href="{% url 'doctor_profile' %}">
+            <img src="{% static 'images/profile_icon.jpg' %}" alt="Profile Icon" class="profile-image">
+            <span>View Profile</span>
+        </a>
+    </div>
+
+    <!-- Options Sections with Card Layout -->
+    <div class="container">
+        <div class="row">
+            <!-- Generate Bill Section -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-invoice-dollar fa-3x mb-3"></i>
+                        <h5 class="card-title">Generate Bill</h5>
+                        <p class="card-text">Create a new bill for consultations or services.</p>
+                        <a href="{% url 'generate_bill' %}" class="btn btn-outline-primary">Generate Bill</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Bill Section -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-invoice fa-3x mb-3"></i>
+                        <h5 class="card-title">View Bill</h5>
+                        <p class="card-text">Review and manage your billing information.</p>
+                        {% if billing %}
+                        <a href="{% url 'billing_list' %}" class="btn btn-outline-primary">View Bill</a>
+                        {% else %}
+                        <a href="#" class="btn btn-outline-primary disabled">View Bill</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Section -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-calendar-check fa-3x mb-3"></i>
+                        <h5 class="card-title">Your Appointments</h5>
+                        <p class="card-text">Check the status of your appointments and manage them.</p>
+                        <a href="{% url 'doctor_appointments' %}" class="btn btn-outline-primary">View Appointments</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Your Appointments Section -->
+    <div class="appointments">
+        <h3 class="text-center">Your Appointments</h3>
+        <form method="GET" action="{% url 'doctor_appointments' %}" class="text-center">
+            <div class="form-group">
+                <label for="status">Filter by Status:</label>
+                <select name="status" id="status" class="form-control">
+                    <option value="">All</option>
+                    <option value="Pending" {% if request.GET.status == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Approved" {% if request.GET.status == 'Approved' %}selected{% endif %}>Approved</option>
+                    <option value="Rejected" {% if request.GET.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </form>
+
+        <!-- Appointments Table -->
+        {% if appointments %}
+        <table class="appointments-table">
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
+                    <td>{{ appointment.date }}</td>
+                    <td>{{ appointment.time }}</td>
+                    <td>{{ appointment.reason }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'update_appointment_status' appointment.id %}">
+                            {% csrf_token %}
+                            <select name="status" class="form-control" onchange="this.form.submit()">
+                                <option value="Pending" {% if appointment.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                <option value="Approved" {% if appointment.status == 'Approved' %}selected{% endif %}>Approved</option>
+                                <option value="Rejected" {% if appointment.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                            </select>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="{% url 'cancel_appointment' appointment.id %}" class="btn btn-danger">Cancel</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-center">You have no upcoming appointments.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Patient Bills{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/patient_bills.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="billing-header">My Bills</h1>
+
+        <!-- Filter Form -->
+        <form method="get" action="{% url 'patient_bills' %}">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" value="{{ selected_date|date:'Y-m-d' }}">
+            <button type="submit">Filter Bills</button>
+        </form>
+        
+        <!-- Bills Table -->
+        <table class="billing-table mt-4">
+            <thead>
+                <tr>
+                    <th>Bill ID</th>
+                    <th>Doctor</th>
+                    <th>Date Generated</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bill in bills %}
+                <tr>
+                    <td>{{ bill.id }}</td>
+                    <td>{{ bill.doctor.name }}</td>
+                    <td>{{ bill.date_generated|date:"d M Y" }}</td>
+                    <td>{{ bill.amount }}</td>
+                    <td>
+                        <a href="{% url 'download_pdf' bill.id %}" class="btn btn-info btn-sm">Download PDF</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No bills found for the selected date.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

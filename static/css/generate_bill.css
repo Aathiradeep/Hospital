@@ -1,0 +1,35 @@
+/* Generate Bill Heading */
+.heading {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    text-align: center;
+    color: #007bff;
+}
+
+/* Form and Input Styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}

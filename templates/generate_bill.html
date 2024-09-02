@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/generate_bill.css' %}">
+
+<div class="container">
+    {% if messages %}
+        <div class="alert alert-success">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+   
+
+    <h2 class="heading">Generate Bill</h2>
+
+    <form method="POST" action="{% url 'generate_bill' %}">
+        {% csrf_token %}
+
+        <!-- Patient Select -->
+        <div class="form-group">
+            <label for="patient_id">Patient</label>
+            <select id="patient_id" name="patient" class="form-control">
+                <option value="">Select Patient</option>
+                {% for patient in patients %}
+                    <option value="{{ patient.id }}">{{ patient.first_name }} {{ patient.last_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Doctor Select -->
+        <div class="form-group">
+            <label for="doctor_id">Doctor</label>
+            <select id="doctor_id" name="doctor" class="form-control">
+                <option value="">Select Doctor</option>
+                {% for doctor in doctors %}
+                    <option value="{{ doctor.id }}" data-fee="{{ doctor.consultation_fee }}">
+                        {{ doctor.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Consultation Fee -->
+        <div class="form-group">
+            <label for="consultation_fee">Consultation Fee</label>
+            <input type="text" id="consultation_fee" name="consultation_fee" class="form-control" readonly>
+        </div>
+
+        <!-- Patient Phone -->
+        <div class="form-group">
+            <label for="patient_phone">Patient Phone</label>
+            <input type="text" id="patient_phone" name="patient_phone" class="form-control" readonly>
+        </div>
+
+        <!-- Patient Address -->
+        <div class="form-group">
+            <label for="patient_address">Patient Address</label>
+            <input type="text" id="patient_address" name="patient_address" class="form-control" readonly>
+        </div>
+
+        <!-- Room Charge -->
+        <div class="form-group">
+            <label for="room_charge">Room Charge</label>
+            <input type="text" id="room_charge" name="room_charge" class="form-control" required>
+        </div>
+
+        <!-- Days Stayed -->
+        <div class="form-group">
+            <label for="days_stayed">Days Stayed</label>
+            <input type="number" id="days_stayed" name="days_stayed" class="form-control" required>
+        </div>
+
+        <!-- Medicine Cost -->
+        <div class="form-group">
+            <label for="medicine_cost">Medicine Cost</label>
+            <input type="text" id="medicine_cost" name="medicine_cost" class="form-control" required>
+        </div>
+
+        <!-- Other Charges -->
+        <div class="form-group">
+            <label for="other_charges">Other Charges</label>
+            <input type="text" id="other_charges" name="other_charges" class="form-control" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Generate Bill</button>
+    </form>
+</div>
+
+<script src="{% static 'js/generate_bill.js' %}"></script>
+{% endblock %}

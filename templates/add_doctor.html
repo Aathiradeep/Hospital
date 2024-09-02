@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Add Doctor{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Container styling */
+    .container {
+        background-color: #aaaad4; /* Light background color */
+        border-radius: 12px;
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        max-width: 700px;
+        margin: 60px auto;
+    }
+
+    /* Form heading styling */
+    h2 {
+        font-family: 'Arial', sans-serif;
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    /* Form styling */
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    /* Form fields styling */
+    .form-group {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #ffffff;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        padding: 12px 15px;
+        font-size: 15px;
+        color: #495057;
+        transition: border-color 0.3s ease;
+        width: 100%;
+    }
+
+    .form-control:focus {
+        border-color: #80bdff;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    /* Button styling */
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 6px;
+        color: #ffffff;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* File input styling */
+    input[type="file"] {
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    input[type="file"]::file-selector-button {
+        background-color: #007bff;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add New Doctor</h2>
+    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Add Doctor</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

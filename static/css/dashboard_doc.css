@@ -1,0 +1,86 @@
+/* dashboard_doc.css */
+
+/* Style for buttons box */
+.buttons-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.buttons-box h3 {
+    margin-bottom: 10px;
+}
+
+.buttons-box .btn {
+    width: 200px;
+    padding: 10px;
+    text-align: center;
+    margin: 5px;
+    font-size: 16px;
+}
+
+.buttons-box .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.buttons-box .btn-primary:hover {
+    background-color: #3aae74;
+}
+
+.buttons-box .btn-secondary {
+    background-color: #007bff;
+    color: rgb(195, 232, 224);
+    border: none;
+}
+
+.buttons-box .btn-secondary:hover {
+    background-color: #3aae74;
+}
+
+.buttons-box .btn.disabled {
+    background-color: #a34747;
+    cursor: not-allowed;
+}
+
+/* Centered profile icon */
+.profile-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.profile-icon img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.profile-icon span {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+/* Style for appointments section */
+.appointments {
+    margin-top: 20px;
+}
+
+.appointments-table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.appointments-table th, .appointments-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.appointments-table th {
+    background-color: #f2f2f2;
+    text-align: center;
+}

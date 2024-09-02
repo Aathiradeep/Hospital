@@ -1,0 +1,100 @@
+/* Container styling */
+.billing-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+/* Header styling */
+.billing-header {
+    text-align: center;
+    border-bottom: 2px solid #f2f2f2;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.billing-header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+/* Patient details styling */
+.patient-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.patient-details .details-left, 
+.patient-details .details-right {
+    width: 48%;
+}
+
+.patient-details p {
+    margin: 5px 0;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+    color: #555;
+}
+
+.table td {
+    color: #333;
+}
+
+.table .total-row td {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Download button styling */
+.download-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #d9534f;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    margin: 20px auto;
+    display: block;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.download-btn:hover {
+    background-color: #c9302c;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .patient-details {
+        flex-direction: column;
+    }
+
+    .patient-details .details-left, 
+    .patient-details .details-right {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

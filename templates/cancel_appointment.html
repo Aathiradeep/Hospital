@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<div class="dashboard">
+    <h2>Cancel Appointment</h2>
+
+    <p>Are you sure you want to cancel this appointment with Dr. {{ appointment.doctor.name }} on {{ appointment.date }} at {{ appointment.time }}?</p>
+
+    <form method="post" action="{% url 'cancel_appointment' appointment.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="reason">Reason for Cancellation (Optional):</label>
+            <textarea id="reason" name="reason" class="form-control">{{ appointment.reason|default_if_none:"None" }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-danger">Confirm Cancellation</button>
+        <a href="{% url 'doctor_dashboard' %}" class="btn btn-secondary">Go Back</a>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/dashboard_doc.css' %}">
+
+<div class="dashboard">
+    <h2>Your Appointments</h2>
+
+    <!-- Filter Form -->
+    <form method="GET" action="{% url 'doctor_appointments' %}" class="filter-form">
+        <label for="status">Filter by Status:</label>
+        <select name="status" id="status">
+            <option value="">All</option>
+            <option value="Pending" {% if request.GET.status == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="Approved" {% if request.GET.status == 'Approved' %}selected{% endif %}>Approved</option>
+            <option value="Rejected" {% if request.GET.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    <!-- Appointments Table -->
+    {% if appointments %}
+    <table class="appointments-table">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
+                <td>{{ appointment.date }}</td>
+                <td>{{ appointment.time }}</td>
+                <td>{{ appointment.reason }}</td>
+                <td>{{ appointment.status }}</td>
+                <td>
+                    <form method="POST" action="{% url 'update_appointment_status' appointment.id %}" class="status-form">
+                        {% csrf_token %}
+                        <select name="status">
+                            <option value="Pending" {% if appointment.status == 'Pending' %}selected{% endif %}>Pending</option>
+                            <option value="Approved" {% if appointment.status == 'Approved' %}selected{% endif %}>Approved</option>
+                            <option value="Rejected" {% if appointment.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>You have no appointments to show.</p>
+    {% endif %}
+</div>
+{% endblock %}

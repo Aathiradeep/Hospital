@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<div class="container">
+    <h2>Delete Patient</h2>
+    <p>Are you sure you want to delete {{ patient.name }}?</p>
+
+    <form method="post" action="{% url 'delete_patient' patient.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'patient_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

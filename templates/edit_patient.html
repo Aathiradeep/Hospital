@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/edit_patient.css' %}">
+
+<div class="container">
+    <h2>Edit Patient</h2>
+
+    <form method="post" action="{% url 'edit_patient' patient.id %}">
+        {% csrf_token %}
+        
+        {{ form.as_p }}  <!-- This will render all form fields based on the `PatientForm` class -->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{% url 'patient_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

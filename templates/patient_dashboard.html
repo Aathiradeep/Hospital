@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<div class="container mt-5">
+    <h2 class="mb-4">Welcome, {{ user.username }}!</h2>
+
+    <!-- Success Message Display -->
+    {% if messages %}
+    <div class="alert alert-success" role="alert">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Profile, Appointments, and Bills Overview -->
+    <div class="row">
+        <!-- Profile Section -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-user-circle fa-3x mb-3"></i>
+                    <h5 class="card-title">My Profile</h5>
+                    <p class="card-text">View and update your personal information.</p>
+                    <a href="{% url 'patient_profile' %}" class="btn btn-outline-primary">View Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments Section -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-calendar-check fa-3x mb-3"></i>
+                    <h5 class="card-title">My Appointments</h5>
+                    <p class="card-text">Check the status of your appointments.</p>
+                    <a href="{% url 'view_appointments' %}" class="btn btn-outline-primary">View Appointments</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bills Section -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-file-invoice-dollar fa-3x mb-3"></i>
+                    <h5 class="card-title">My Bills</h5>
+                    <p class="card-text">View and manage your billing information.</p>
+                    <a href="{% url 'patient_bills' %}" class="btn btn-outline-primary">View Bills</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Appointment Section -->
+    <h3 class="mt-5 mb-4">Book a New Appointment:</h3>
+    <form method="POST" action="{% url 'book_appointment' %}">
+        {% csrf_token %}
+
+        <!-- Doctor Dropdown -->
+        <div class="form-group">
+            <label for="doctor">Choose Doctor:</label>
+            <select name="doctor" id="doctor" class="form-control" required>
+                {% for doctor in available_doctors %}
+                <option value="{{ doctor.id }}">
+                    Dr. {{ doctor.name }} - {{ doctor.specialization }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Date Picker -->
+        <div class="form-group">
+            <label for="date">Choose Date:</label>
+            <input type="date" name="date" id="date" class="form-control" required>
+        </div>
+
+        <!-- Time Slot Dropdown -->
+        <div class="form-group">
+            <label for="time">Choose Time:</label>
+            <select name="time" id="time" class="form-control" required>
+                <option>No available time slots</option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Book Appointment</button>
+    </form>
+</div>
+
+<!-- Notification Modal -->
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationModalLabel">Appointment Update</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Your appointment with Dr. {{ appointment.doctor.name }} on {{ appointment.date }} has been updated.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="confirmUpdate">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const dateInput = document.getElementById('date');
+    const timeInput = document.getElementById('time');
+    const doctorInput = document.getElementById('doctor');
+
+    // Set the minimum date to today's date to prevent past date selection
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById("date").setAttribute("min", today);
+
+    const updateTimeSlots = () => {
+        const doctorId = doctorInput.value;
+        const date = dateInput.value;
+
+        if (doctorId && date) {
+            $.ajax({
+                url: "{% url 'get_available_time_slots' %}",
+                type: "GET",
+                data: {
+                    doctor_id: doctorId,
+                    date: date
+                },
+                success: function(response) {
+                    // Clear existing time slots
+                    timeInput.innerHTML = '';
+
+                    // Check if there are available time slots
+                    if (response.available_time_slots.length > 0) {
+                        response.available_time_slots.forEach(function(slot) {
+                            const option = document.createElement('option');
+                            option.value = slot;
+                            option.text = slot;
+                            timeInput.appendChild(option);
+                        });
+                    } else {
+                        const option = document.createElement('option');
+                        option.text = 'No available time slots';
+                        timeInput.appendChild(option);
+                    }
+                },
+                error: function() {
+                    alert("An error occurred while fetching available time slots.");
+                }
+            });
+        }
+    };
+
+    // Listen to changes in date and doctor inputs
+    doctorInput.addEventListener('change', updateTimeSlots);
+    dateInput.addEventListener('change', updateTimeSlots);
+
+    // Handle appointment update confirmation
+    $('#confirmUpdate').on('click', function() {
+        $('#notificationModal').modal('hide');
+        // Mark the notification as seen via AJAX
+        $.post('/appointments/mark_notification_seen/{{ appointment.id }}/', {
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        });
+    });
+});
+</script>
+{% endblock %}

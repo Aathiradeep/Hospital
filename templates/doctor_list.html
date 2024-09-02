@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Doctors - Dayaan HMS{% endblock %}
+
+{% block content %}
+<!-- team section -->
+<section class="team_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>Our Doctors-Dayaan Medicals</h2>
+    </div>
+    <div class="carousel-wrap">
+      <div class="owl-carousel team_carousel">
+        {% for doctor in doctors %}
+        <div class="item">
+          <div class="box">
+            <div class="img-box">
+              <a href="{% url 'public_doctor_profile' doctor.id %}">
+                <img src="{{ doctor.image.url }}" alt="Dr. {{ doctor.name }}" />
+              </a>
+            </div>
+            <div class="detail-box">
+              <h5>Dr. {{ doctor.name }}</h5>
+              <h6>{{ doctor.qualifications }}</h6>
+              <div class="social_box">
+                <!-- You can dynamically link their social profiles if stored in the database -->
+                <a href="#" class="social_icon"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#" class="social_icon"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="#" class="social_icon"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                <a href="#" class="social_icon"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end team section -->
+{% endblock %}
